@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { AuthContext } from '../context/AuthContext';
 import { Users, CreditCard } from 'lucide-react';
 
@@ -29,7 +29,7 @@ const Booking = () => {
 
         const fetchFlight = async () => {
             try {
-                const { data } = await axios.get(`/api/flights/${id}`);
+                const { data } = await api.get(`/api/flights/${id}`);
                 setFlight(data);
                 setLoading(false);
             } catch (err) {
@@ -107,7 +107,7 @@ const Booking = () => {
 
             const totalPrice = flight.price * passengers.length;
 
-            await axios.post(
+            await api.post(
                 '/api/bookings',
                 {
                     flightId: flight._id,

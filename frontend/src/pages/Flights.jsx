@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { Plane, Clock, IndianRupee, AlertCircle, Info } from 'lucide-react';
 
 const FlightCard = ({ flight }) => (
@@ -79,12 +79,12 @@ const Flights = () => {
 
                 if (searchOrigin || searchDestination || searchDate) {
                     // Search mode (origin/destination/date specified)
-                    const { data } = await axios.get(`/api/flights/search?${params.toString()}`);
+                    const { data } = await api.get(`/api/flights/search?${params.toString()}`);
                     setFlights(data.exactMatches);
                     setSuggestions(data.suggestions);
                 } else {
                     // List mode (possibly filtered by type)
-                    const { data } = await axios.get(`/api/flights?${params.toString()}`);
+                    const { data } = await api.get(`/api/flights?${params.toString()}`);
                     setFlights(data);
                 }
 

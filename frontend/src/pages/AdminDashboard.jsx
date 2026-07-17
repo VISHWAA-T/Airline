@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -42,7 +42,7 @@ const AdminDashboard = () => {
                 },
             };
 
-            await axios.post(
+            await api.post(
                 '/api/flights',
                 {
                     airline,
