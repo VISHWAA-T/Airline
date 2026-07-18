@@ -16,10 +16,18 @@ connectDB();
 const app = express();
 
 // Middleware
-const allowedOrigins = process.env.CORS_ORIGIN?.split(',').map(origin => origin.trim()).filter(Boolean);
+// Support for a debugging flag to allow all origins when troubleshooting CORS in deployment.
+const allowAllOrigins = process.env.ALLOW_ALL_ORIGINS === 'true';
+const allowedOrigins = allowAllOrigins
+    ? []
+    : process.env.CORS_ORIGIN?.split(',').map(origin => origin.trim()).filter(Boolean);
+
+if (allowAllOrigins) {
+    console.warn('ALLOW_ALL_ORIGINS is enabled — accepting requests from any origin (debug only)');
+}
 
 app.use(cors({
-    origin: allowedOrigins?.length ? allowedOrigins : true,
+    origin: allowAllOrigins ? true : (allowedOrigins?.length ? allowedOrigins : true),
     credentials: true,
 }));
 app.use(express.json());
