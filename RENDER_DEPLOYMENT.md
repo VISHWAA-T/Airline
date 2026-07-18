@@ -28,7 +28,25 @@
    - **PORT**: `10000` (Render assigns this, but can override)
    - **MONGO_URI**: Your MongoDB Atlas connection string
    - **JWT_SECRET**: A strong random secret
-   - **CORS_ORIGIN**: `https://your-frontend-url.onrender.com`
+    - **CORS_ORIGIN**: `https://your-frontend-url.onrender.com`
+
+    Notes:
+    - Set `CORS_ORIGIN` to the exact origin(s) of your deployed frontend. For example, if your frontend URL is `https://airline-1-ap7y.onrender.com`, set:
+       - `CORS_ORIGIN=https://airline-1-ap7y.onrender.com`
+    - To allow multiple origins, provide a comma-separated list (no spaces):
+       - `CORS_ORIGIN=https://app.example.com,https://admin.example.com`
+    - After updating environment variables, **redeploy** the backend service so the new CORS settings take effect.
+
+### Quick CORS verification
+- Use this curl command to verify the backend responds to preflight requests (replace the URL and origin):
+
+```bash
+curl -i -X OPTIONS "https://your-backend-url.onrender.com/api/users" \
+   -H "Origin: https://your-frontend-url.onrender.com" \
+   -H "Access-Control-Request-Method: POST"
+```
+
+If the response includes `Access-Control-Allow-Origin: https://your-frontend-url.onrender.com`, CORS is configured correctly.
 
 ## If Build Still Fails
 

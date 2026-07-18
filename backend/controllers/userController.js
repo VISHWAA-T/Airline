@@ -26,7 +26,8 @@ const authUser = async (req, res) => {
             res.status(401).json({ message: 'Invalid email or password' });
         }
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error(error);
+        res.status(500).json({ message: process.env.NODE_ENV === 'production' ? 'Server error' : error.message });
     }
 };
 
@@ -65,7 +66,8 @@ const registerUser = async (req, res) => {
             res.status(400).json({ message: 'Invalid user data' });
         }
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error(error);
+        res.status(500).json({ message: process.env.NODE_ENV === 'production' ? 'Server error' : error.message });
     }
 };
 
@@ -87,7 +89,8 @@ const getUserProfile = async (req, res) => {
             res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error(error);
+        res.status(500).json({ message: process.env.NODE_ENV === 'production' ? 'Server error' : error.message });
     }
 };
 
