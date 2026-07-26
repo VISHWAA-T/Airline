@@ -84,8 +84,14 @@ const MyBookings = () => {
         const card2Y = card1Y + cardHeight + 24;
         const valueX = leftX + 110;
         const cardRightLimit = leftX + cardWidth - 20;
-        const qrX = pageWidth - 150;
-        const qrY = card2Y + 20;
+        // QR: fully inside card2 border with padding on all sides
+        const qrSize = 100;
+        const qrPad = 10;
+        const qrBoxRight = leftX + cardWidth - 15;          // 15pt margin from card2 right inner edge
+        const qrBoxX = qrBoxRight - qrSize - qrPad * 2;    // background box left
+        const qrBoxY = card2Y + (cardHeight - qrSize - qrPad * 2) / 2 - 6; // vertically centred in card2
+        const qrX = qrBoxX + qrPad;                         // image left
+        const qrY = qrBoxY + qrPad;                         // image top
 
         doc.setDrawColor(209, 213, 219);
         doc.setFillColor(255, 255, 255);
@@ -154,18 +160,18 @@ const MyBookings = () => {
 
         doc.setFillColor(248, 249, 250);
         doc.setDrawColor(209, 213, 219);
-        doc.rect(qrX - 10, qrY - 10, 130, 130, 'FD');
+        doc.rect(qrBoxX, qrBoxY, qrSize + qrPad * 2, qrSize + qrPad * 2, 'FD');
 
         try {
             const qrData = await QRCode.toDataURL(`booking:${booking._id}`, {
                 type: 'image/png',
                 errorCorrectionLevel: 'H',
             });
-            doc.addImage(qrData, 'PNG', qrX, qrY, 110, 110);
+            doc.addImage(qrData, 'PNG', qrX, qrY, qrSize, qrSize);
         } catch (err) {
             console.warn('QR code generation failed; continuing without QR code', err);
             doc.setFontSize(10);
-            doc.text('QR generation unavailable', qrX, qrY + 60, { maxWidth: 110 });
+            doc.text('QR generation unavailable', qrX, qrY + 50, { maxWidth: qrSize });
         }
 
         doc.setFontSize(10);
