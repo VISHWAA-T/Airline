@@ -30,10 +30,10 @@ const MyBookings = () => {
         if (value === undefined || value === null) return '';
         const text = value.toString();
         return text
-            .replace(/&/g, '')
+            .replace(/&/g, '&')
             .replace(/→/g, ' to ')
             .replace(/₹/g, 'Rs ')
-            .replace(/[^ - ]+/g, '')
+            .replace(/[^\x20-\x7E]/g, '')  // remove non-printable / non-ASCII chars for jsPDF
             .trim();
     };
 
