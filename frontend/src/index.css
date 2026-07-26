@@ -150,6 +150,7 @@ button {
   justify-content: space-between;
   align-items: center;
   position: relative;
+  gap: 1rem;
 }
 
 .nav-logo {
@@ -159,6 +160,7 @@ button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .nav-links {
@@ -169,15 +171,6 @@ button {
 
 .nav-toggle-btn {
   display: none;
-  background: transparent;
-  border: none;
-  color: var(--text-color);
-  padding: 0.5rem;
-  border-radius: var(--border-radius);
-}
-
-.nav-toggle-btn:hover {
-  background: #f1f3f5;
 }
 
 /* Animations */
@@ -272,38 +265,50 @@ button {
     padding: 1.25rem;
   }
 
+  /* Always show nav links in header on mobile — no hamburger */
   .nav-toggle-btn {
+    display: none;
+  }
+
+  .navbar {
+    padding: 0.65rem 0;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .nav-top-row {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+    padding-bottom: 0.5rem;
   }
 
   .nav-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: calc(100% + 0.5rem);
-    left: 0;
-    right: 0;
-    background: var(--white);
-    padding: 1.25rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    border-radius: var(--border-radius);
-    gap: 1rem;
-    align-items: stretch;
-    border: 1px solid #e9ecef;
+    display: flex !important;
+    flex-direction: row;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.5rem;
+    padding: 0.4rem 0 0.5rem 0;
+    align-items: center;
+    border-top: 1px solid #f0f0f0;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
   }
 
-  .nav-links.open {
-    display: flex;
-    animation: fadeIn 0.25s ease-out forwards;
+  .nav-links::-webkit-scrollbar {
+    display: none;
   }
 
   .nav-links a, .nav-links button {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-    padding: 0.65rem 1rem;
+    white-space: nowrap;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.88rem;
+    flex-shrink: 0;
   }
 
   .grid-2, .grid-3 {
