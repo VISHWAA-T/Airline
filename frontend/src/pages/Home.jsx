@@ -96,7 +96,7 @@ const Home = () => {
                     {/* Stats row */}
                     <div className="hero-stats-row" style={{
                         display: 'flex',
-                        justify: 'center',
+                        justifyContent: 'center',
                         gap: '2.5rem',
                         flexWrap: 'wrap',
                         marginTop: '1rem',
