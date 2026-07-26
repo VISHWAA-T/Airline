@@ -15,15 +15,13 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="container nav-container">
-                {/* Logo row */}
-                <div className="nav-top-row" style={{ flex: '0 0 auto', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Link to="/" className="nav-logo">
-                        <Plane size={26} />
-                        <span>SkyWings</span>
-                    </Link>
-                </div>
+                {/* Logo */}
+                <Link to="/" className="nav-logo">
+                    <Plane size={26} />
+                    <span>SkyWings</span>
+                </Link>
 
-                {/* Nav links row — always visible, scrollable on mobile */}
+                {/* Nav links — always visible, scrollable on mobile */}
                 <div className="nav-links">
                     <Link to="/">Home</Link>
                     <Link to="/flights">Flights</Link>

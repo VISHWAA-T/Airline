@@ -149,7 +149,6 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   gap: 1rem;
 }
 
@@ -274,17 +273,15 @@ button {
     padding: 0.65rem 0;
   }
 
+  /* Two-row layout on mobile: logo on top, links below */
   .nav-container {
     flex-direction: column;
     align-items: stretch;
     gap: 0;
   }
 
-  .nav-top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 0.5rem;
+  .nav-logo {
+    padding-bottom: 0.45rem;
   }
 
   .nav-links {
@@ -293,7 +290,7 @@ button {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     gap: 0.5rem;
-    padding: 0.4rem 0 0.5rem 0;
+    padding: 0.4rem 0 0.4rem 0;
     align-items: center;
     border-top: 1px solid #f0f0f0;
     flex-wrap: nowrap;
