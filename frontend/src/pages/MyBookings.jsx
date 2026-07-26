@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { AuthContext } from '../context/AuthContext';
 import { Plane, Calendar, CreditCard } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -183,7 +183,7 @@ const MyBookings = () => {
                         Authorization: `Bearer ${user.token}`,
                     },
                 };
-                const { data } = await axios.get('/api/bookings/mybookings', config);
+                const { data } = await api.get('/api/bookings/mybookings', config);
                 setBookings(data);
                 setLoading(false);
             } catch (err) {
