@@ -6,23 +6,23 @@ import { Plane, Clock, IndianRupee, AlertCircle, Info } from 'lucide-react';
 const FlightCard = ({ flight }) => (
     <div className="card animate-fade-in" style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid #efefef', paddingBottom: '1rem' }}>
-            <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Plane /> {flight.airline}</h3>
-            <span style={{ background: '#e9ecef', padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold' }}>{flight.flightNumber}</span>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.1rem' }}><Plane size={20} /> {flight.airline}</h3>
+            <span style={{ background: '#e9ecef', padding: '0.25rem 0.6rem', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold' }}>{flight.flightNumber}</span>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+        <div className="flight-card-route" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', gap: '0.5rem' }}>
             <div>
-                <p style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{flight.origin}</p>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                <p style={{ fontSize: '1.15rem', fontWeight: 'bold' }}>{flight.origin}</p>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
                     <Clock size={14} /> {new Date(flight.departureTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', color: 'var(--primary-color)' }}>
-                <Plane size={24} style={{ transform: 'rotate(90deg)' }} />
+            <div className="flight-icon-center" style={{ display: 'flex', alignItems: 'center', color: 'var(--primary-color)' }}>
+                <Plane size={22} style={{ transform: 'rotate(90deg)' }} />
             </div>
-            <div style={{ textAlign: 'right' }}>
-                <p style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{flight.destination}</p>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.2rem' }}>
+            <div className="flight-card-dest" style={{ textAlign: 'right' }}>
+                <p style={{ fontSize: '1.15rem', fontWeight: 'bold' }}>{flight.destination}</p>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.2rem' }}>
                     <Clock size={14} /> {new Date(flight.arrivalTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
             </div>
@@ -34,9 +34,9 @@ const FlightCard = ({ flight }) => (
             </p>
         </div>
 
-        <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderTop: '1px solid #efefef' }}>
-            <p style={{ fontSize: '1.5rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', color: '#198754' }}>
-                <IndianRupee size={20} />{flight.price}
+        <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderTop: '1px solid #efefef', gap: '0.5rem', flexWrap: 'wrap' }}>
+            <p style={{ fontSize: '1.35rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', color: '#198754', margin: 0 }}>
+                <IndianRupee size={18} />{flight.price}
             </p>
             <Link to={`/book/${flight._id}`} className="btn btn-primary">
                 Book Now
@@ -78,12 +78,10 @@ const Flights = () => {
                 if (searchType) params.set('type', searchType);
 
                 if (searchOrigin || searchDestination || searchDate) {
-                    // Search mode (origin/destination/date specified)
                     const { data } = await api.get(`/api/flights/search?${params.toString()}`);
                     setFlights(data.exactMatches);
                     setSuggestions(data.suggestions);
                 } else {
-                    // List mode (possibly filtered by type)
                     const { data } = await api.get(`/api/flights?${params.toString()}`);
                     setFlights(data);
                 }
@@ -101,7 +99,6 @@ const Flights = () => {
     if (loading) return <div className="container" style={{ textAlign: 'center', marginTop: '5rem' }}><h2>Loading available flights...</h2></div>;
     if (error) return <div className="container" style={{ color: 'red', marginTop: '5rem' }}><h2>{error}</h2></div>;
 
-    // Build a readable search summary string
     const searchSummary = [
         searchType && `${searchType.charAt(0).toUpperCase() + searchType.slice(1)} trip`,
         searchOrigin && `from ${searchOrigin}`,
@@ -110,51 +107,50 @@ const Flights = () => {
     ].filter(Boolean).join(' ');
 
     return (
-        <div className="container" style={{ marginTop: '3rem', marginBottom: '3rem' }}>
+        <div className="container" style={{ marginTop: '2.5rem', marginBottom: '3rem' }}>
             <h1 style={{ marginBottom: '0.5rem', textAlign: 'center' }}>
                 {searchType ? `${searchType.charAt(0).toUpperCase() + searchType.slice(1)} Flights` : isSearchMode ? 'Search Results' : 'Available Flights'}
             </h1>
 
             {(isSearchMode || searchType) && (
-                <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '2rem', fontSize: '1.05rem' }}>
+                <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '2rem', fontSize: '1rem' }}>
                     Showing flights {searchSummary}
                 </p>
             )}
 
             {/* Exact Matches */}
             {flights.length > 0 ? (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>
+                <div className="cards-grid">
                     {flights.map(flight => (
                         <FlightCard key={flight._id} flight={flight} />
                     ))}
                 </div>
             ) : isSearchMode ? (
-                /* No exact matches — show a message */
-                <div className="card" style={{ textAlign: 'center', padding: '2.5rem', background: '#fff3cd', border: '1px solid #ffc107' }}>
-                    <AlertCircle size={48} style={{ color: '#856404', marginBottom: '1rem' }} />
+                <div className="card" style={{ textAlign: 'center', padding: '2rem 1.25rem', background: '#fff3cd', border: '1px solid #ffc107' }}>
+                    <AlertCircle size={40} style={{ color: '#856404', marginBottom: '0.75rem' }} />
                     <h3 style={{ color: '#856404', marginBottom: '0.5rem' }}>No exact flights found {searchSummary}</h3>
                     <p style={{ color: '#664d03' }}>We couldn't find a flight matching your exact search. Check out our suggestions below!</p>
                 </div>
             ) : (
-                <div className="card" style={{ textAlign: 'center' }}>
+                <div className="card" style={{ textAlign: 'center', padding: '2rem 1.25rem' }}>
                     <h3>No flights found at the moment.</h3>
-                    <p style={{ color: 'var(--text-muted)' }}>Please check back later or try different search criteria.</p>
+                    <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Please check back later or try different search criteria.</p>
                 </div>
             )}
 
             {/* Suggestions Section */}
             {suggestions.length > 0 && (
                 <div style={{ marginTop: '3rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
                         <Info size={22} style={{ color: 'var(--primary-color)' }} />
                         <h2 style={{ margin: 0 }}>
                             Suggested Flights {searchDestination ? `to ${searchDestination}` : searchOrigin ? `from ${searchOrigin}` : ''}
                         </h2>
                     </div>
                     <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
-                        These flights match your destination but depart on different dates or from other origins. You might find one that works for you!
+                        These flights match your destination but depart on different dates or from other origins.
                     </p>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>
+                    <div className="cards-grid">
                         {suggestions.map(flight => (
                             <FlightCard key={flight._id} flight={flight} />
                         ))}
@@ -162,9 +158,8 @@ const Flights = () => {
                 </div>
             )}
 
-            {/* Link back to all flights when in search/filter mode */}
             {(isSearchMode || searchType) && (
-                <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+                <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
                     <Link to="/flights" className="btn" style={{ border: '1px solid var(--primary-color)', color: 'var(--primary-color)', background: 'transparent' }}>
                         View All Available Flights
                     </Link>

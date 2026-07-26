@@ -19,12 +19,11 @@ const AdminDashboard = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
-    // Ensure only admins can access
     if (!user || !user.isAdmin) {
         return (
             <div className="container" style={{ textAlign: 'center', marginTop: '5rem' }}>
                 <h2>Access Denied</h2>
-                <p>You must be an administrator to view this page.</p>
+                <p style={{ marginTop: '0.5rem', color: 'var(--text-muted)' }}>You must be an administrator to view this page.</p>
                 <button className="btn btn-primary" onClick={() => navigate('/')} style={{ marginTop: '1rem' }}>Return Home</button>
             </div>
         );
@@ -59,7 +58,6 @@ const AdminDashboard = () => {
             );
 
             setMessage('Flight successfully created!');
-            // Reset form
             setAirline('');
             setFlightNumber('');
             setOrigin('');
@@ -76,17 +74,17 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div className="container" style={{ marginTop: '3rem', marginBottom: '3rem', maxWidth: '800px' }}>
-            <h1 style={{ marginBottom: '2rem' }}>Admin Dashboard</h1>
+        <div className="container" style={{ marginTop: '2.5rem', marginBottom: '3rem', maxWidth: '850px' }}>
+            <h1 style={{ marginBottom: '1.5rem', textAlign: 'center' }}>Admin Dashboard</h1>
 
             <div className="card animate-fade-in">
-                <h2 style={{ marginBottom: '1.5rem', borderBottom: '1px solid #efefef', paddingBottom: '0.8rem' }}>Add New Flight Route</h2>
+                <h2 style={{ marginBottom: '1.25rem', borderBottom: '1px solid #efefef', paddingBottom: '0.8rem' }}>Add New Flight Route</h2>
 
-                {message && <div style={{ background: '#d1e7dd', color: '#0f5132', padding: '1rem', borderRadius: '4px', marginBottom: '1.5rem' }}>{message}</div>}
-                {error && <div style={{ background: '#f8d7da', color: '#842029', padding: '1rem', borderRadius: '4px', marginBottom: '1.5rem' }}>{error}</div>}
+                {message && <div style={{ background: '#d1e7dd', color: '#0f5132', padding: '0.85rem', borderRadius: '4px', marginBottom: '1.25rem' }}>{message}</div>}
+                {error && <div style={{ background: '#f8d7da', color: '#842029', padding: '0.85rem', borderRadius: '4px', marginBottom: '1.25rem' }}>{error}</div>}
 
                 <form onSubmit={handleSubmit}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                    <div className="grid-2" style={{ marginBottom: '1rem' }}>
                         <div className="form-group">
                             <label className="form-label">Airline Name</label>
                             <input type="text" className="form-control" value={airline} onChange={e => setAirline(e.target.value)} required />
@@ -97,7 +95,7 @@ const AdminDashboard = () => {
                         </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                    <div className="grid-2" style={{ marginBottom: '1rem' }}>
                         <div className="form-group">
                             <label className="form-label">Origin (Airport Code)</label>
                             <input type="text" className="form-control" value={origin} onChange={e => setOrigin(e.target.value)} required />
@@ -108,7 +106,7 @@ const AdminDashboard = () => {
                         </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                    <div className="grid-2" style={{ marginBottom: '1rem' }}>
                         <div className="form-group">
                             <label className="form-label">Departure Time</label>
                             <input type="datetime-local" className="form-control" value={departureTime} onChange={e => setDepartureTime(e.target.value)} required />
@@ -119,7 +117,7 @@ const AdminDashboard = () => {
                         </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                    <div className="grid-3" style={{ marginBottom: '1rem' }}>
                         <div className="form-group">
                             <label className="form-label">Ticket Price (₹)</label>
                             <input type="number" className="form-control" value={price} onChange={e => setPrice(e.target.value)} required min="0" step="0.01" />
@@ -137,7 +135,7 @@ const AdminDashboard = () => {
                         </div>
                     </div>
 
-                    <button type="submit" className="btn btn-primary" style={{ marginTop: '1rem' }}>Create Flight Route</button>
+                    <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '1rem', padding: '0.85rem' }}>Create Flight Route</button>
                 </form>
             </div>
         </div>
